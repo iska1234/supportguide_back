@@ -2,8 +2,8 @@ import bcrypt from "bcryptjs";
 
 import { ApiError } from "../middlewares/error";
 import { generateToken } from "../utils/token";
-import { getUserIdByEmail, loginUser, registerUser } from "../data/auth.data";
-import { UserData } from "../models/users";
+import { getUserById, getUserIdByEmail, loginUser, registerUser } from "../data/auth.data";
+import { UserData, Users } from "../models/users";
 
 
 export async function registerUserToken(
@@ -42,3 +42,11 @@ export const loginUserToken = async (
 
   return { id: userId, token, role: user.role };
 };
+
+export async function fetchUserDataById(userId: number): Promise<Users> {
+  const user = await getUserById(userId);
+  if (!user) {
+    throw new Error("Usuario no encontrado");
+  }
+  return user;
+}

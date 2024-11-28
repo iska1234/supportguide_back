@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { ApiError } from "../middlewares/error";
 import z from "zod";
 import { verifyEmail } from "../data/auth.data";
-import { loginUserToken, registerUserToken } from "../services/auth.service";
+import { fetchUserDataById, loginUserToken, registerUserToken } from "../services/auth.service";
 import { userSchema } from "../models/users";
 
 
@@ -129,6 +129,33 @@ export const login = async (
       success: false,
       message: error instanceof Error ? error.message : "Unknown error",
     });
+  }
+};
+
+export const getUserByIdController = async (
+  req: Request & { userId?: number },
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.userId;
+
+    if (!userId) {
+      return res.status(401).json({
+        success: false,
+        message: "No autorizado. No se encontró el userId en el token.",
+      });
+    }
+
+    const user = await fetchUserDataById(userId);
+
+    return res.json({
+      success: true,
+      message: "Usuario encontrado",
+      data: user,
+    });
+  } catch (error: any) {
+    return next(new ApiError("Error interno del servidor", 500));
   }
 };
 

@@ -9,6 +9,14 @@ CREATE TABLE users (
     created_at TIMESTAMP(0) NOT NULL DEFAULT current_timestamp
     updated_at TIMESTAMP(0) NOT NULL DEFAULT current_timestamp
 );
+CREATE TABLE topics (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP(0) NOT NULL DEFAULT current_timestamp,
+    updated_at TIMESTAMP(0) NOT NULL DEFAULT current_timestamp,
+    isCompleted BOOLEAN DEFAULT FALSE
+);
 
 //
 -- CREATE TABLE projects (

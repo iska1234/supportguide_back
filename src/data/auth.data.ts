@@ -72,3 +72,13 @@ export async function verifyEmail(
 
   return rows[0].id;
 }
+
+export async function getUserById(userId: number): Promise<Users | null> {
+  const { rows, rowCount } = await query(
+    "SELECT id, name, lastname, email, role FROM users WHERE id = $1",
+    [userId]
+  );
+
+  if (rowCount === 0) return null;
+  return rows[0];
+}

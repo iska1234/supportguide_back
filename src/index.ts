@@ -6,6 +6,7 @@ import errorHandler from "./middlewares/error";
 import Server from "./classes/server";
 import authRouter from "./routers/auth.routes";
 import companySettingsRouter from "./routers/companySettings.routes";
+import topicRouter from "./routers/topic.routes";
 
 const server = Server.instance;
 const morgan = require('morgan');
@@ -29,7 +30,7 @@ server.app.use(
 
 server.app.use("/auth", authRouter);
 server.app.use("/companySettings", companySettingsRouter);
-// server.app.use("/courses", coursesRouter);
+server.app.use("/topic", topicRouter);
 // server.app.use("/sections", sectionsRouter);
 // server.app.use("/questionnaries", questionnariesRouter);
 // server.app.use("/questions", questionsRouter);

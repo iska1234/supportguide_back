@@ -50,14 +50,14 @@ export const getCompanySettings = async (
   next: NextFunction
 ) => {
   try {
-    const userId = parseInt(req.params['userId'], 10);
-    if (isNaN(userId)) {
-      return res.status(400).json({
+    const userId = req.userId;
+
+    if (!userId) {
+      return res.status(401).json({
         success: false,
-        message: "El userId debe ser un número válido",
+        message: "No autorizado. No se encontró el userId en el token.",
       });
     }
-
     const settings = await getSettingsByUserId(userId);
 
     return res.json({
