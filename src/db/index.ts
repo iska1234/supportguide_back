@@ -7,6 +7,9 @@ const dbConfig = {
   database: process.env["PGDATABASE"],
   user: process.env["PGUSER"],
   password: process.env["PGPASSWORD"],
+  ssl: {
+    rejectUnauthorized: false
+  }
 };
 
 export const pool = new Pool(dbConfig);
